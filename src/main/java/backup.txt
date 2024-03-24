@@ -1,0 +1,346 @@
+import java.util.*;
+
+public class DataStructures {
+  private static Scanner scanner = new Scanner(System.in);
+
+  private interface DataStructureOperations {
+    void insert();
+
+    void delete();
+
+    void select();
+
+    void find();
+
+    void display();
+  }
+
+  public void runMenu(Scanner scanner) {
+    while (true) {
+      System.out.println("\nChoose data structure:");
+      System.out.println("1: Array\n2: Dynamic Array\n3: Linked List\n4: Stack\n5: Queue\n6: Hash Table\n0: Exit");
+      System.out.print("Enter your choice: ");
+      int choice = scanner.nextInt();
+
+      if (choice == 0) {
+        System.out.println("Exiting...");
+        break;
+      }
+
+      switch (choice) {
+        case 1:
+          showOperations(new ArrayOperations());
+          break;
+        case 2:
+          showOperations(new DynamicArrayOperations());
+          break;
+        case 3:
+          showOperations(new LinkedListOperations());
+          break;
+        case 4:
+          showOperations(new StackOperations());
+          break;
+        case 5:
+          showOperations(new QueueOperations());
+          break;
+        case 6:
+          showOperations(new HashTableOperations());
+          break;
+        default:
+          System.out.println("Invalid choice");
+          break;
+      }
+    }
+  }
+
+  private static void showOperations(DataStructureOperations operations) {
+    while (true) {
+      System.out.println("\nSelect operation:");
+      System.out.println("1: Insert\n2: Delete\n3: Select\n4: Find\n5: Display Values\n0. Return to main menu");
+      System.out.print("Enter your choice: ");
+      int choice = scanner.nextInt();
+
+      switch (choice) {
+        case 1:
+          operations.insert();
+          break;
+        case 2:
+          operations.delete();
+          break;
+        case 3:
+          operations.select();
+          break;
+        case 4:
+          operations.find();
+          break;
+        case 5:
+          operations.display();
+        case 0:
+          return;
+        default:
+          System.out.println("Invalid choice");
+          break;
+      }
+    }
+  }
+
+  static class ArrayOperations implements DataStructureOperations {
+    int[] array = new int[10];
+    int size = 0;
+
+    public void insert() {
+      if (size >= array.length) {
+        System.out.println("Array is full.");
+      } else {
+        System.out.print("Enter number to insert: ");
+        int num = scanner.nextInt();
+        array[size++] = num;
+        System.out.println("Inserted: " + num);
+      }
+    }
+
+    public void delete() {
+      if (size == 0) {
+        System.out.println("Array is empty.");
+      } else {
+        size--;
+        System.out.println("Deleted: " + array[size]);
+      }
+    }
+
+    public void select() {
+      System.out.println("Array contents:");
+      for (int i = 0; i < size; i++) {
+        System.out.println("Index " + i + ": " + array[i]);
+      }
+    }
+
+    public void find() {
+      System.out.print("Enter number to find: ");
+      int num = scanner.nextInt();
+      for (int i = 0; i < size; i++) {
+        if (array[i] == num) {
+          System.out.println("Found at index: " + i);
+          return;
+        }
+      }
+      System.out.println("Not found.");
+    }
+
+    public void display() {
+      System.out.println("Current Array: " + Arrays.toString(Arrays.copyOf(array, size)));
+    }
+  }
+
+  static class DynamicArrayOperations implements DataStructureOperations {
+    ArrayList<Integer> dynamicArray = new ArrayList<Integer>();
+
+    public void insert() {
+      System.out.print("Enter number to insert: ");
+      int num = scanner.nextInt();
+      dynamicArray.add(num);
+      System.out.println("Inserted: " + num);
+    }
+
+    public void delete() {
+      if (dynamicArray.isEmpty()) {
+        System.out.println("Dynamic array is empty.");
+      } else {
+        System.out.print("Enter index to delete: ");
+        int index = scanner.nextInt();
+        if (index >= 0 && index < dynamicArray.size()) {
+          int removed = dynamicArray.remove(index);
+          System.out.println("Deleted: " + removed);
+        } else {
+          System.out.println("Invalid index.");
+        }
+      }
+    }
+
+    public void select() {
+      System.out.println("Dynamic array contents:");
+      for (int i = 0; i < dynamicArray.size(); i++) {
+        System.out.println("Index " + i + ": " + dynamicArray.get(i));
+      }
+    }
+
+    public void find() {
+      System.out.print("Enter number to find: ");
+      int num = scanner.nextInt();
+      int index = dynamicArray.indexOf(num);
+      if (index != -1) {
+        System.out.println("Found at index: " + index);
+      } else {
+        System.out.println("Not found.");
+      }
+    }
+
+    public void display() {
+      System.out.println("Current Dynamic Array: " + dynamicArray);
+    }
+  }
+
+  static class LinkedListOperations implements DataStructureOperations {
+    LinkedList<Integer> linkedList = new LinkedList<Integer>();
+
+    public void insert() {
+      System.out.print("Enter number to insert at the end: ");
+      int num = scanner.nextInt();
+      linkedList.add(num);
+      System.out.println("Inserted: " + num);
+    }
+
+    public void delete() {
+      if (linkedList.isEmpty()) {
+        System.out.println("Linked list is empty.");
+      } else {
+        System.out.print("Enter index to delete: ");
+        int index = scanner.nextInt();
+        if (index >= 0 && index < linkedList.size()) {
+          int removed = linkedList.remove(index);
+          System.out.println("Deleted: " + removed);
+        } else {
+          System.out.println("Invalid index.");
+        }
+      }
+    }
+
+    public void select() {
+      System.out.println("Linked list contents:");
+      int index = 0;
+      for (int num : linkedList) {
+        System.out.println("Index " + index++ + ": " + num);
+      }
+    }
+
+    public void find() {
+      System.out.print("Enter number to find: ");
+      int num = scanner.nextInt();
+      int index = linkedList.indexOf(num);
+      if (index != -1) {
+        System.out.println("Found at index: " + index);
+      } else {
+        System.out.println("Not found.");
+      }
+    }
+
+    public void display() {
+      System.out.println("Current Linked List: " + linkedList);
+    }
+  }
+
+  static class StackOperations implements DataStructureOperations {
+    Stack<Integer> stack = new Stack<Integer>();
+
+    public void insert() {
+      System.out.print("Enter number to push: ");
+      int num = scanner.nextInt();
+      stack.push(num);
+      System.out.println("Pushed: " + num);
+    }
+
+    public void delete() {
+      if (stack.isEmpty()) {
+        System.out.println("Stack is empty.");
+      } else {
+        System.out.println("Popped: " + stack.pop());
+      }
+    }
+
+    public void select() {
+      if (stack.isEmpty()) {
+        System.out.println("Stack is empty.");
+      } else {
+        System.out.println("Top element: " + stack.peek());
+      }
+    }
+
+    public void find() {
+      System.out.println("Find operation is not typical for Stack.");
+    }
+
+    public void display() {
+      System.out.println("Current Stack: " + stack);
+    }
+  }
+
+  static class QueueOperations implements DataStructureOperations {
+    Queue<Integer> queue = new LinkedList<Integer>();
+
+    public void insert() {
+      System.out.print("Enter number to enqueue: ");
+      int num = scanner.nextInt();
+      queue.add(num);
+      System.out.println("Enqueued: " + num);
+    }
+
+    public void delete() {
+      if (queue.isEmpty()) {
+        System.out.println("Queue is empty.");
+      } else {
+        System.out.println("Dequeued: " + queue.remove());
+      }
+    }
+
+    public void select() {
+      if (queue.isEmpty()) {
+        System.out.println("Queue is empty.");
+      } else {
+        System.out.println("Front element: " + queue.peek());
+      }
+    }
+
+    public void find() {
+      System.out.println("Find operation is not typical for Queue.");
+    }
+
+    public void display() {
+      System.out.println("Current Queue: " + queue);
+    }
+  }
+
+  static class HashTableOperations implements DataStructureOperations {
+    Hashtable<String, String> hashTable = new Hashtable<String, String>();
+
+    public void insert() {
+      System.out.print("Enter key to insert: ");
+      String key = scanner.next();
+      System.out.print("Enter value for the key: ");
+      String value = scanner.next();
+      hashTable.put(key, value);
+      System.out.println("Inserted: [" + key + ": " + value + "]");
+    }
+
+    public void delete() {
+      System.out.print("Enter key to delete: ");
+      String key = scanner.next();
+      if (hashTable.remove(key) != null) {
+        System.out.println("Deleted key: " + key);
+      } else {
+        System.out.println("Key not found.");
+      }
+    }
+
+    public void select() {
+      System.out.print("Enter key to retrieve: ");
+      String key = scanner.next();
+      String value = hashTable.get(key);
+      if (value != null) {
+        System.out.println("Value: " + value);
+      } else {
+        System.out.println("Key not found.");
+      }
+    }
+
+    public void find() {
+      System.out.print("Enter key to find: ");
+      String key = scanner.next();
+      boolean exists = hashTable.containsKey(key);
+      System.out.println("Key " + (exists ? "exists" : "does not exist") + " in the hash table.");
+    }
+
+    public void display() {
+      System.out.println("Current Hash Table: " + hashTable);
+    }
+  }
+}
